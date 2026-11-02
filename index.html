@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1728">
+  <link rel="manifest" href="./manifest.json">
+
+  <title>Portable Cold Storage Monitoring System</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #172b4d;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --blue: #1677d2;
+      --green: #16865c;
+      --orange: #b76b08;
+      --red: #c43d3d;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      background: #123052;
+      color: white;
+      padding: 24px 20px;
+    }
+
+    .container {
+      width: min(1100px, 100%);
+      margin: auto;
+    }
+
+    .brand {
+      color: #b9e4ff;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: clamp(23px, 4vw, 32px);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: #d6e5f5;
+      font-size: 14px;
+    }
+
+    main {
+      padding: 24px 18px;
+    }
+
+    .connection {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 26px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      background: var(--orange);
+      border-radius: 50%;
+    }
+
+    .demo-tag {
+      padding: 7px 12px;
+      border-radius: 7px;
+      color: #805000;
+      background: #fff2d6;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .section-title {
+      font-size: 19px;
+      margin-bottom: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      min-width: 0;
+      box-shadow: 0 2px 7px rgba(20, 40, 70, 0.035);
+    }
+
+    .card-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .reading {
+      font-size: clamp(25px, 3vw, 34px);
+      font-weight: bold;
+      overflow-wrap: anywhere;
+      margin-bottom: 8px;
+    }
+
+    .unit {
+      font-size: 15px;
+      font-weight: normal;
+    }
+
+    .description {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .blue { color: var(--blue); }
+    .green { color: var(--green); }
+    .orange { color: var(--orange); }
+
+    .status-box {
+      display: inline-block;
+      padding: 6px 10px;
+      background: #fff2d6;
+      color: #805000;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: bold;
+      margin: 4px 0 10px;
+    }
+
+    .progress-track {
+      height: 9px;
+      background: #e8edf4;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 15px 0 9px;
+    }
+
+    .progress {
+      height: 100%;
+      width: 76%;
+      background: var(--blue);
+      border-radius: 10px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-top: 24px;
+    }
+
+    .panel-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .panel-heading h2 {
+      font-size: 18px;
+    }
+
+    .small-tag {
+      font-size: 11px;
+      color: var(--muted);
+      background: #eef2f7;
+      padding: 6px 9px;
+      border-radius: 6px;
+    }
+
+    .chart-wrap {
+      width: 100%;
+      height: 230px;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .notice {
+      background: #fff8e8;
+      border: 1px solid #f2d69a;
+      color: #76521a;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 22px;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 25px 15px;
+      font-size: 11px;
+    }
+
+    @media (max-width: 750px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      main {
+        padding: 20px 14px;
+      }
+
+      .card {
+        padding: 16px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .connection {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <div class="brand">FISHERIES • IoT MONITORING</div>
+      <h1>Portable Cold Storage</h1>
+      <p>Monitoring System for Post-Harvest Fisheries</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="connection">
+      <div>
+        <div class="label">DEVICE CONNECTION</div>
+        <div class="status">
+          <span class="dot"></span>
+          <span>Not Connected</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="label">LAST UPDATE</div>
+        <strong id="lastUpdate">--</strong>
+      </div>
+
+      <span class="demo-tag">DEMO DATA ONLY</span>
+    </section>
+
+    <h2 class="section-title">Storage Overview</h2>
+
+    <section class="grid">
+
+      <article class="card">
+        <div class="card-label">🌡️ TEMPERATURE</div>
+        <div class="reading blue">
+          4.0 <span class="unit">°C</span>
+        </div>
+        <p class="description">Sample chamber temperature</p>
+      </article>
+
+      <article class="card">
+        <div class="card-label">🧪 AMMONIA READING</div>
+        <div class="reading orange">N/A</div>
+        <p class="description">Sensor not yet configured</p>
+      </article>
+
+      <article class="card">
+        <div class="card-label">🔋 BATTERY VOLTAGE</div>
+        <div class="reading green">
+          12.8 <span class="unit">V</span>
+        </div>
+        <p class="description">Illustrative voltage only</p>
+      </article>
+
+      <article class="card">
+        <div class="card-label">⚡ BATTERY CHARGE</div>
+        <div class="reading">76%</div>
+        <div class="progress-track">
+          <div class="progress"></div>
+        </div>
+        <p class="description">Simulated charge estimate</p>
+      </article>
+
+      <article class="card">
+        <div class="card-label">☀️ POWER SOURCE</div>
+        <div class="status-box">Not Detected</div>
+        <p class="description">Source detection not configured</p>
+      </article>
+
+      <article class="card">
+        <div class="card-label">📡 SYSTEM STATUS</div>
+        <div class="status-box">Demo Mode</div>
+        <p class="description">ESP32 not yet connected</p>
+      </article>
+
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <h2>Temperature History</h2>
+        <span class="small-tag">ILLUSTRATIVE DATA</span>
+      </div>
+
+      <div class="chart-wrap">
+        <canvas id="temperatureChart"
+                role="img"
+                aria-label="Illustrative temperature history graph">
+          Illustrative temperature history graph.
+        </canvas>
+      </div>
+
+      <p class="description">
+        The graph uses sample values and does not represent actual
+        cold-storage performance.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">Monitoring Information</h2>
+
+      <p class="description">
+        This application is an initial interface prototype.
+        Hardware integration, sensor calibration, data synchronization,
+        and alert thresholds are not yet configured.
+      </p>
+
+      <div class="notice">
+        <strong>IMPORTANT:</strong>
+        All numerical readings and graph values are illustrative.
+        Do not use them to determine actual fish freshness, food safety,
+        battery condition, or system performance.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Portable Cold Storage Monitoring System · Initial Prototype
+  </footer>
+
+  <script>
+    // Update the displayed local time.
+    function updateClock() {
+      document.getElementById("lastUpdate").textContent =
+        new Date().toLocaleTimeString();
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Illustrative data only; replace with actual measurements later.
+    const sampleTemperatures = [4.5, 4.3, 4.4, 4.1, 4.2, 4.0, 4.1];
+    const sampleLabels = ["08:00", "09:00", "10:00",
+                          "11:00", "12:00", "13:00", "14:00"];
+
+    function drawChart() {
+      const canvas = document.getElementById("temperatureChart");
+      const ctx = canvas.getContext("2d");
+
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      const ratio = window.devicePixelRatio || 1;
+
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+
+      const left = 38;
+      const right = 12;
+      const top = 15;
+      const bottom = 30;
+
+      const chartWidth = width - left - right;
+      const chartHeight = height - top - bottom;
+
+      const minValue = 3;
+      const maxValue = 6;
+
+      ctx.font = "11px Arial";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+
+      // Horizontal grid lines and temperature labels.
+      for (let value = minValue; value <= maxValue; value++) {
+        const y = top + chartHeight -
+          ((value - minValue) / (maxValue - minValue)) * chartHeight;
+
+        ctx.beginPath();
+        ctx.strokeStyle = "#e2e8f0";
+        ctx.lineWidth = 1;
+        ctx.moveTo(left, y);
+        ctx.lineTo(width - right, y);
+        ctx.stroke();
+
+        ctx.fillStyle = "#64748b";
+        ctx.fillText(value + "°", left - 8, y);
+      }
+
+      const points = sampleTemperatures.map((value, index) => ({
+        x: left + (index / (sampleTemperatures.length - 1)) *
+          chartWidth,
+        y: top + chartHeight -
+          ((value - minValue) / (maxValue - minValue)) * chartHeight
+      }));
+
+      // Draw the line.
+      ctx.beginPath();
+      ctx.strokeStyle = "#1677d2";
+      ctx.lineWidth = 2.5;
+
+      points.forEach((point, index) => {
+        if (index === 0) {
+          ctx.moveTo(point.x, point.y);
+        } else {
+          ctx.lineTo(point.x, point.y);
+        }
+      });
+
+      ctx.stroke();
+
+      // Draw sample points and time labels.
+      points.forEach((point, index) => {
+        ctx.beginPath();
+        ctx.fillStyle = "#1677d2";
+        ctx.arc(point.x, point.y, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#64748b";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillText(
+          sampleLabels[index],
+          point.x,
+          height - bottom + 10
+        );
+      });
+    }
+
+    drawChart();
+    window.addEventListener("resize", drawChart);
+  </script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./service-worker.js")
+        .then(() => {
+          console.log("Service worker registered successfully.");
+        })
+        .catch(error => {
+          console.error("Service worker registration failed:", error);
+        });
+    });
+  }
+</script>
+</body>
+</html>

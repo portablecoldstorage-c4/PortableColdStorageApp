@@ -1,0 +1,18 @@
+{
+  "name": "Portable Cold Storage Monitoring System",
+  "short_name": "Cold Storage",
+  "description": "Monitoring system for post-harvest fisheries",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#123052",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
