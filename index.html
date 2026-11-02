@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b1728">
+  <meta name="theme-color" content="#0f766e">
   <link rel="manifest" href="./manifest.json">
 
   <title>Portable Cold Storage Monitoring System</title>
@@ -16,14 +16,14 @@
     }
 
     :root {
-      --bg: #f4f7fb;
+      --bg: #f4f8f7;
       --card: #ffffff;
-      --text: #172b4d;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --blue: #1677d2;
+      --text: #183b3a;
+      --muted: #647b78;
+      --border: #dce8e5;
+      --blue: #0f766e;
       --green: #16865c;
-      --orange: #b76b08;
+      --orange: #a66a2c;
       --red: #c43d3d;
     }
 
@@ -35,7 +35,7 @@
     }
 
     header {
-      background: #123052;
+      background: #0f766e;
       color: white;
       padding: 24px 20px;
     }
@@ -46,7 +46,7 @@
     }
 
     .brand {
-      color: #b9e4ff;
+      color: #ccfbf1;
       font-size: 12px;
       font-weight: bold;
       letter-spacing: 1.5px;
@@ -60,7 +60,7 @@
     }
 
     header p {
-      color: #d6e5f5;
+      color: #e6fffb;
       font-size: 14px;
     }
 
@@ -106,7 +106,7 @@
       padding: 7px 12px;
       border-radius: 7px;
       color: #805000;
-      background: #fff2d6;
+      background: #fff3dc;
       font-size: 11px;
       font-weight: bold;
     }
@@ -128,7 +128,7 @@
       border-radius: 14px;
       padding: 20px;
       min-width: 0;
-      box-shadow: 0 2px 7px rgba(20, 40, 70, 0.035);
+      box-shadow: 0 3px 10px rgba(15, 118, 110, 0.055);
     }
 
     .card-label {
@@ -162,7 +162,7 @@
     .status-box {
       display: inline-block;
       padding: 6px 10px;
-      background: #fff2d6;
+      background: #fff3dc;
       color: #805000;
       border-radius: 7px;
       font-size: 13px;
@@ -172,7 +172,7 @@
 
     .progress-track {
       height: 9px;
-      background: #e8edf4;
+      background: #e5eeeb;
       border-radius: 10px;
       overflow: hidden;
       margin: 15px 0 9px;
@@ -209,7 +209,7 @@
     .small-tag {
       font-size: 11px;
       color: var(--muted);
-      background: #eef2f7;
+      background: #edf4f2;
       padding: 6px 9px;
       border-radius: 6px;
     }
@@ -226,9 +226,9 @@
     }
 
     .notice {
-      background: #fff8e8;
-      border: 1px solid #f2d69a;
-      color: #76521a;
+      background: #f2faf7;
+      border: 1px solid #cfe6dd;
+      color: #42665b;
       padding: 15px;
       border-radius: 10px;
       margin-top: 22px;
@@ -440,13 +440,13 @@
           ((value - minValue) / (maxValue - minValue)) * chartHeight;
 
         ctx.beginPath();
-        ctx.strokeStyle = "#e2e8f0";
+        ctx.strokeStyle = "#dce8e5";
         ctx.lineWidth = 1;
         ctx.moveTo(left, y);
         ctx.lineTo(width - right, y);
         ctx.stroke();
 
-        ctx.fillStyle = "#64748b";
+        ctx.fillStyle = "#647b78";
         ctx.fillText(value + "°", left - 8, y);
       }
 
@@ -459,7 +459,7 @@
 
       // Draw the line.
       ctx.beginPath();
-      ctx.strokeStyle = "#1677d2";
+      ctx.strokeStyle = "#0f766e";
       ctx.lineWidth = 2.5;
 
       points.forEach((point, index) => {
@@ -475,11 +475,11 @@
       // Draw sample points and time labels.
       points.forEach((point, index) => {
         ctx.beginPath();
-        ctx.fillStyle = "#1677d2";
+        ctx.fillStyle = "#0f766e";
         ctx.arc(point.x, point.y, 3.5, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.fillStyle = "#64748b";
+        ctx.fillStyle = "#647b78";
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
         ctx.fillText(
